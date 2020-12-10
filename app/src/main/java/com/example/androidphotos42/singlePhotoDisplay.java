@@ -34,6 +34,7 @@ public class singlePhotoDisplay extends AppCompatActivity {
     public Button tagButton, addTag, deleteTag;
     public ListView listView;
     public TextView filename;
+    public EditText tagName, tagValue;
 
     //Array Lists
     public static ArrayList<Photo> allPhotos = new ArrayList<Photo>();
@@ -42,7 +43,7 @@ public class singlePhotoDisplay extends AppCompatActivity {
 
     //Adapter
     public ArrayAdapter<Tag> adapter;
-    private ArrayAdapter<String> tagsAdapter;
+    //private ArrayAdapter<String> tagsAdapter;
 
     //Indices
     public int currIndex=0;
@@ -57,30 +58,40 @@ public class singlePhotoDisplay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_photo_display);
 
+        //MAJOR CHANGE which removed the null pointer exception:
+        listView = (ListView) findViewById(R.id.listView);
+
+        adapter = (ArrayAdapter<Tag>) listView.getAdapter();
+
         imageView = (ImageView) findViewById(R.id.imageView);
 
         //TBD: Set name at the top.
         filename = (TextView) findViewById(R.id.filename);
-        filename.setText(MainActivity.driver.getCurrentAlbum().getPhoto().fileName);
+        filename.setText(MainActivity.driver.getCurrentAlbum().getPhoto().photoname);
+
+        tagName =(EditText)findViewById(R.id.tagName);
+        tagValue =(EditText) findViewById(R.id.tagValue);
 
         //TBD: Displays first image. (Meant to)
-        spinUpDisplay();
+        if (MainActivity.driver.getCurrentAlbum().getPhotos().size() != 0) {
+            spinUpDisplay();
+        }
 
         //Not sure if this is the correct way to display first picture.
-        Photo photo = MainActivity.driver.getCurrentAlbum().getPhoto();
-        this.photo = photo;
-        Intent intent = getIntent();
-        int index = intent.getIntExtra("index", -1);
-        Bundle b = intent.getExtras();
-        if(b!=null) {
-            Uri uri = Uri.parse(MainActivity.driver.getCurrentAlbum().getPhotos().get(index).getPhotoFilePath());
-            imageView.setImageURI(uri);
-
-            // displayTags();
-        }
-        else{
-
-        }
+//        Photo photo = MainActivity.driver.getCurrentAlbum().getPhoto();
+//        this.photo = photo;
+//        Intent intent = getIntent();
+//        int index = intent.getIntExtra("index", -1);
+//        Bundle b = intent.getExtras();
+//        if(b!=null) {
+//            Uri uri = Uri.parse(MainActivity.driver.getCurrentAlbum().getPhotos().get(index).getPhotoFilePath());
+//            imageView.setImageURI(uri);
+//
+//            // displayTags();
+//        }
+//        else{
+//
+//        }
 
     }
 
@@ -175,16 +186,19 @@ public class singlePhotoDisplay extends AppCompatActivity {
 
 
     public void addTags(View view) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final ArrayAdapter<Tag> adapter = (ArrayAdapter<Tag>) listView.getAdapter();
 
-        String tagname = addTag.getText().toString();
-        String tagvalue = deleteTag.getText().toString();
+        adapter = (ArrayAdapter<Tag>) listView.getAdapter();
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+
+
+        String tagname = tagName.getText().toString();
+        String tagvalue = tagValue.getText().toString();
         Tag tag = (tagname.isEmpty() || tagvalue.isEmpty()) ? null : new Tag(tagname, tagvalue);
 
         //If Tag already exists.
         if (checkTags(tag)) {
-            new AlertDialog.Builder(builder.getContext())
+            new AlertDialog.Builder(dialogBuilder.getContext())
                     .setMessage("This tag already exists.")
                     .setPositiveButton("OK", null)
                     .show();
@@ -193,7 +207,7 @@ public class singlePhotoDisplay extends AppCompatActivity {
 
         //Only allows Person and Location
         if (tagname != "Person" || tagname != "Location"){
-            new AlertDialog.Builder(builder.getContext())
+            new AlertDialog.Builder(dialogBuilder.getContext())
                     .setMessage("Please enter 'Person' or 'Location' for Tag Name.")
                     .setPositiveButton("OK", null)
                     .show();
@@ -202,6 +216,8 @@ public class singlePhotoDisplay extends AppCompatActivity {
 
         //Update Tag List
         adapter.add(tag);
+        update();
+        dialogBuilder.show();
         listView.setAdapter(adapter);
     }
 
@@ -216,19 +232,27 @@ public class singlePhotoDisplay extends AppCompatActivity {
         MainActivity.driver.getCurrentAlbum().getPhoto().deleteTag(tag.getType(), tag.getValue());
 
         //Update Tag List
-        adapter.add(tag);
-        listView.setAdapter(adapter);
+        adapter.remove(tag);
+        update();
+        //listView.setAdapter(adapter);
     }
 
 
 
 
     public boolean checkTags(Tag tag){
-        for (int i = 0; i < allTags.size(); i++){
+        for (int i = 0; i < driver.getCurrentAlbum().currPhoto.getTags().size(); i++){
             if (tag.equals(allTags.get(i))){
                 return false;
             }
         }
         return true;
+    }
+
+    public void update(){
+        allTags.clear();
+        for(int i = 0; i < MainActivity.driver.getCurrentAlbum().getPhoto().getTags().size(); i++){
+            allTags.add(MainActivity.driver.getCurrentAlbum().getPhoto().getTags().get(i));
+        }
     }
 }

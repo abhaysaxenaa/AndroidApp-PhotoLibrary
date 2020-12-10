@@ -23,4 +23,6 @@
     <string name="deletePhotoButton">Delete</string>
     <string name="movephotoButton">Move</string>
     <string name="openPhotoButton">open</string>
+    <string name="AddTag">Add Tag</string>
+    <string name="DeleteTag">Delete Tag</string>
 </resources>

@@ -46,9 +46,10 @@
         android:id="@+id/filename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/imageView"
-        android:layout_marginStart="126dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="-1dp"
         android:background="@android:color/background_light"
         android:text="@string/phototextview"
         android:textColor="@android:color/background_dark" />
@@ -72,7 +73,7 @@
         android:layout_marginEnd="53dp"
         android:onClick="addTags"
         android:layout_marginBottom="83dp"
-        android:text="@string/tags" />
+        android:text="@string/AddTag" />
 
     <Button
         android:id="@+id/deleteTag"
@@ -80,26 +81,34 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:onClick="deleteTags"
-        android:layout_marginEnd="51dp"
+        android:layout_marginEnd="37dp"
         android:layout_marginBottom="19dp"
-        android:text="@string/tags" />
+        android:onClick="deleteTags"
+        android:text="@string/DeleteTag" />
 
     <EditText
         android:id="@+id/tagName"
         android:layout_width="112dp"
         android:layout_height="34dp"
+        android:layout_above="@id/addTag"
+        android:layout_alignRight="@id/addTag"
         android:layout_marginTop="141dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginRight="-9dp"
+        android:layout_marginBottom="16dp"
         android:inputType="text"
         android:textSize="20sp" />
 
     <EditText
         android:id="@+id/tagValue"
-        android:layout_width="112dp"
-        android:layout_height="34dp"
+        android:layout_width="119dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tagName"
+        android:layout_alignEnd="@id/tagName"
+        android:layout_alignBottom="@id/tagName"
         android:layout_marginTop="500dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="-4dp"
+        android:layout_marginBottom="46dp"
         android:inputType="text"
         android:textSize="20sp" />
 

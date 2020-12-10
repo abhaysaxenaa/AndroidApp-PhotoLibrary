@@ -137,7 +137,9 @@ public class AlbumActivity extends AppCompatActivity {
                             populate();
                             imageAdapter.allPhotos = MainActivity.driver.getCurrentAlbum().allPhotos;
                             imageAdapter.notifyDataSetChanged();
-                            // gridView.setAdapter(imageAdapter);
+
+                            //MAJOR CHANGE Fixes the different photos being displayed on the GridView:
+                            gridView.setAdapter(imageAdapter);
 
                         }
                     }

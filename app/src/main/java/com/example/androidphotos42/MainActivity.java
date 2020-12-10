@@ -38,13 +38,10 @@ public class MainActivity extends AppCompatActivity {
     public ListView listView;
 
     public ArrayAdapter adapter;
-    // public Album album = new Album();
-    public ArrayList<Album> allAlbums ;
-    AlbumList albumList;
-    public static AlbumList driver;
-    File file ;
-
-    // public static AlbumList manager = new AlbumList();
+    public ArrayList<Album> allAlbums = new ArrayList<Album>();
+    //AlbumList albumList;
+    public static AlbumList driver = new AlbumList();
+    File file;
 
 
     @Override
@@ -74,17 +71,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+//        Album testAlbum = new Album("Test");
+//        driver.addAlbum(testAlbum);
+//        allAlbums.add(testAlbum);
+
         try{
-            albumList= AlbumList.load();
-            allAlbums = albumList.allAlbums;
-            driver = albumList;
+            driver = AlbumList.load();
+            populateList();
         }catch(Exception e){
             e.printStackTrace();
         }
 
-        adapter = new ArrayAdapter<>(this, R.layout.content_main, albumList.allAlbums);
-        listView = findViewById(R.id.listView);
-        listView.setAdapter(adapter);
+            adapter = new ArrayAdapter<>(this, R.layout.content_main, driver.getList());
+            listView = findViewById(R.id.listView);
+            listView.setAdapter(adapter);
 
 
 
@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -146,9 +147,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void openAlbum(View view){
 
     }
+
+
     public void addAlbum(View view){
         allAlbums = new ArrayList<Album>();
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -177,20 +181,19 @@ public class MainActivity extends AppCompatActivity {
 //
 
                 }
-                else if(albumList.checkAlbumInList(albumName) == true ){
+                else if(driver.checkAlbumInList(albumName) == true ){
                     new AlertDialog.Builder(dialogBuilder.getContext()).setMessage( "Album name already exists")
                             .setPositiveButton("OK", null)
                             .show();
                     return;
                 }
                 else {
-                    allAlbums.add(new Album(albumName));
-                    adapter.add(newAlbum);
+                    driver.getList().add(new Album(albumName));
+                    //System.out.println(driver);
+                    //adapter.add(newAlbum);
                     try{
-
-                        albumList = new AlbumList();
-                        albumList.allAlbums = allAlbums;
-                        AlbumList.save(albumList);
+                        AlbumList.save(driver);
+                        populateList();
 
                     }catch(Exception e){
                         e.printStackTrace();
@@ -203,6 +206,8 @@ public class MainActivity extends AppCompatActivity {
         });
         dialogBuilder.show();
     }
+
+
 
     public void deleteAlbum(View view){
 
@@ -228,13 +233,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         adapter.remove(currentAlbum);
-                        allAlbums.remove(currentAlbum);
+                        driver.getList().remove(currentAlbum);
                         listView.setItemChecked(index, true);
 
                         try{
-                            albumList = new AlbumList();
-                            albumList.allAlbums = allAlbums;
-                            AlbumList.save(albumList);
+                            AlbumList.save(driver);
+                            populateList();
 
                         }catch(Exception e){
                             e.printStackTrace();
@@ -285,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
                     new AlertDialog.Builder(dialogBuilder.getContext()).setMessage("Album name cannot be empty").setPositiveButton("OK", null).show();
                     return;
                 }
-                else if(albumList.checkAlbumInList(newName) == true ){
+                else if(driver.checkAlbumInList(newName) == true ){
                     new AlertDialog.Builder(dialogBuilder.getContext()).setMessage( "Album name already exists")
                             .setPositiveButton("OK", null)
                             .show();
@@ -293,11 +297,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     currentAlbum.setName(newName);
+                    driver.getCurrentAlbum().setName(newName);
                     adapter.notifyDataSetChanged();
                     try{
-                        albumList = new AlbumList();
-                        albumList.allAlbums = allAlbums;
-                        AlbumList.save(albumList);
+                        AlbumList.save(driver);
+                        populateList();
 
                     }catch(Exception e){
                         e.printStackTrace();
@@ -312,6 +316,16 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.show();
 
     }
+
+
+    private void populateList() {
+        allAlbums.clear();
+
+        for(int i = 0; i < driver.getList().size(); i++) {
+            allAlbums.add(new Album(driver.getList().get(i).getName()));
+        }
+    }
+
 
 
     public static AlbumList load() throws IOException, ClassNotFoundException {
