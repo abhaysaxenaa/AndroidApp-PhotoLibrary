@@ -111,7 +111,7 @@ public class AlbumActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to add \""  + "\"?");
+        builder.setMessage("Are you sure you want to add this photo?");
         builder.setPositiveButton("Add",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -198,10 +198,10 @@ public class AlbumActivity extends AppCompatActivity {
                 });
 
 
-        //  gridView =(GridView) findViewById(R.id.gridView);
+        gridView =(GridView) findViewById(R.id.gridView);
         populate();
         imageAdapter.notifyDataSetChanged();
-        // gridView.setAdapter(imageAdapter);
+        gridView.setAdapter(imageAdapter);
         dialogBuilder.show();
         // deletePhotoButton.setVisibility(View.INVISIBLE);
 
@@ -212,7 +212,7 @@ public class AlbumActivity extends AppCompatActivity {
         imageAdapter = (ImageAdapter)gridView.getAdapter();
         if (imageAdapter.getCount() == 0) {
             new AlertDialog.Builder(this)
-                    .setMessage("There are no albums.")
+                    .setMessage("There are no photos.")
                     .setPositiveButton("OK", null)
                     .show();
 
@@ -273,6 +273,14 @@ public class AlbumActivity extends AppCompatActivity {
     }
 
     public void openPhoto(int index){
+        if (imageAdapter.getCount() == 0) {
+            new AlertDialog.Builder(this)
+                    .setMessage("There are no photos to open.")
+                    .setPositiveButton("OK", null)
+                    .show();
+
+            return;
+        }
         Photo photo = MainActivity.driver.getCurrentAlbum().getPhotos().get(index);
         MainActivity.driver.getCurrentAlbum().setCurrentPhoto(photo);
         Intent intent = new Intent(this, singlePhotoDisplay.class);
