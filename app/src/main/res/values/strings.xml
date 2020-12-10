@@ -25,4 +25,9 @@
     <string name="openPhotoButton">open</string>
     <string name="AddTag">Add Tag</string>
     <string name="DeleteTag">Delete Tag</string>
+    <string name="searchTagValue">Tag Value</string>
+    <string name="addButtonName">Add Tag</string>
+    <string name="searchTagName">Tag Name</string>
+    <string name="searchTags">Search Tag</string>
+    <string name="enteredtags">Entered Tags</string>
 </resources>

@@ -125,6 +125,20 @@ public class MainActivity extends AppCompatActivity {
                 addAlbum(view);
             }
         });
+
+        FloatingActionButton search = findViewById(R.id.searchButton);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+
+                    Intent intent = new Intent(MainActivity.this, SearchPhoto.class);
+                    startActivity(intent);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 

@@ -216,6 +216,7 @@ public class singlePhotoDisplay extends AppCompatActivity {
 
         //Update Tag List
         adapter.add(tag);
+        //adapter.notifyDataSetChanged();
         update();
         dialogBuilder.show();
         listView.setAdapter(adapter);
@@ -233,6 +234,7 @@ public class singlePhotoDisplay extends AppCompatActivity {
 
         //Update Tag List
         adapter.remove(tag);
+        //adapter.notifyDataSetChanged();
         update();
         //listView.setAdapter(adapter);
     }

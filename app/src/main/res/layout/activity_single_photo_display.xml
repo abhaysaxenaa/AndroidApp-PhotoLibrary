@@ -104,6 +104,7 @@
         android:layout_width="119dp"
         android:layout_height="wrap_content"
         android:layout_above="@id/tagName"
+        android:layout_alignStart="@id/tagName"
         android:layout_alignEnd="@id/tagName"
         android:layout_alignBottom="@id/tagName"
         android:layout_marginTop="500dp"
