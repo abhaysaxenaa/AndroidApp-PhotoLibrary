@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".singlePhotoDisplay">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="350dp"
+        android:layout_height="412dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="3dp"
+        android:layout_toStartOf="@id/nextButton"
+        android:layout_toEndOf="@id/backButton"
+        android:contentDescription="@string/desc" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="25dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="141dp"
+        android:background="@null"
+        android:text="@string/previous"
+        android:textSize="20sp"
+        android:onClick="previousPhoto"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="25dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="141dp"
+        android:layout_marginEnd="5dp"
+        android:background="@null"
+        android:text="@string/next"
+        android:onClick="nextPhoto"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/filename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_marginStart="126dp"
+        android:background="@android:color/background_light"
+        android:text="@string/phototextview"
+        android:textColor="@android:color/background_dark" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="215dp"
+        android:layout_height="223dp"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="18dp">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/addTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="53dp"
+        android:onClick="addTags"
+        android:layout_marginBottom="83dp"
+        android:text="@string/tags" />
+
+    <Button
+        android:id="@+id/deleteTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="deleteTags"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="19dp"
+        android:text="@string/tags" />
+
+    <EditText
+        android:id="@+id/tagName"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="141dp"
+        android:layout_marginEnd="5dp"
+        android:inputType="text"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/tagValue"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="5dp"
+        android:inputType="text"
+        android:textSize="20sp" />
+
+</RelativeLayout>

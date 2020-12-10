@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Photo Library</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string-array name="albums_array">
+        <item>Album1</item>
+        <item>Album2</item>
+    </string-array>
+    <string name="title_activity_album">activity_album</string>
+    <string name="title_activity_single_photo_display">singlePhotoDisplay</string>
+    <string name="desc">desc</string>
+    <string name="previous"><![CDATA[<]]></string>
+    <string name="next"><![CDATA[>]]></string>
+    <string name="phototextview">TextView</string>
+    <string name="tags">Tags</string>
+    <string name="photosTextView">photos</string>
+    <string name="deletePhotoButton">Delete</string>
+    <string name="movephotoButton">Move</string>
+    <string name="openPhotoButton">open</string>
+</resources>
